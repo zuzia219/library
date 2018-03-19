@@ -1,13 +1,21 @@
 package com.crud.library.domain;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
+/*@NamedQuery(
+        name = "Item.getNumberOfBookItemsByTitle",
+        query = "from Item where book.getTitle= :title, count(all)"
+)*/
+
+@Component
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -15,7 +23,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "ITEMS")
 public class Item {
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
@@ -24,7 +33,12 @@ public class Item {
     @Column(name = "ID")
     private Long itemId;
 
-    @NotNull
+    @Enumerated
     @Column(name = "STATUS")
     private Status status;
+
+    public Item(Book book) {
+        this.book = book;
+        this.status = Status.AVAILABLE;
+    }
 }

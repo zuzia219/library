@@ -1,0 +1,18 @@
+package com.crud.library.repository;
+
+import com.crud.library.domain.Item;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
+@Repository
+public interface ItemRepository extends CrudRepository <Item, Long> {
+/*    @Query
+    int getNumberOfBookItemsByTitle (@Param("title") String title);*/
+
+    @Override
+    Item save(Item item);
+}
