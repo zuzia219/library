@@ -21,9 +21,12 @@ public class RepositoryTestSuite {
     @Autowired
     BorrowingRepository borrowingRepository;
 
+    @Autowired
+    ReaderRepository readerRepository;
+
 
     @Test
-    public void testBorrowingDao() {
+    public void testBorrowingRepository() {
 
         //Given
         Book book1 = new Book("book title", "book author", 1856);
@@ -33,6 +36,8 @@ public class RepositoryTestSuite {
         Reader reader = new Reader("Andrew", "Andrewoski");
         Borrowing borrowing1 = new Borrowing(item1, reader);
         Borrowing borrowing2 = new Borrowing(item2, reader);
+        reader.getReadersBorrowings().add(borrowing1);
+        reader.getReadersBorrowings().add(borrowing2);
 
         //When
         borrowingRepository.save(borrowing1);
@@ -42,6 +47,8 @@ public class RepositoryTestSuite {
 
         //Then
         Assert.assertNotEquals(0, id1);
+        Assert.assertNotEquals(0, id2);
+
 
         //Cleanup
         borrowingRepository.delete(borrowing1);

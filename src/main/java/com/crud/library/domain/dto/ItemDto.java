@@ -2,6 +2,7 @@ package com.crud.library.domain.dto;
 
 import com.crud.library.domain.Book;
 import com.crud.library.domain.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class ItemDto {
     private Book book;
     private Long itemId;

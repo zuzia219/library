@@ -2,6 +2,7 @@ package com.crud.library.domain.dto;
 
 
 import com.crud.library.domain.Borrowing;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,4 @@ public class ReaderDto {
         this.familyname = familyname;
         this.accountCreated = new Date();
     }
-
 }

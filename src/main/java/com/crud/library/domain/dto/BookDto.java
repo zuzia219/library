@@ -21,7 +21,7 @@ public class BookDto {
     private String author;
     private int publicationYear;
 
-    public BookDto(@NotNull String tiltle, @NotNull String author, @NotNull int publicationYear) {
+    public BookDto(String tiltle, String author, int publicationYear) {
         this.title = tiltle;
         this.author = author;
         this.publicationYear = publicationYear;

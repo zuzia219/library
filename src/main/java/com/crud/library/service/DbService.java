@@ -22,18 +22,19 @@ public class DbService {
     @Autowired
     private BorrowingRepository borrowingRepository;
 
-    public Item saveItem (final Item item) {
+    public Item saveItem(final Item item) {
         return itemRepository.save(item);
     }
 
-    public Book saveBook (final Book book) {
+    public Book saveBook(final Book book) {
         return bookRepository.save(book);
     }
 
-    public Reader saveReader (final Reader reader){
+    public Reader saveReader(final Reader reader) {
         return readerRepository.save(reader);
     }
-    public Borrowing saveBorrowing (final Borrowing borrowing){
+
+    public Borrowing saveBorrowing(final Borrowing borrowing) {
         return borrowingRepository.save(borrowing);
     }
 }

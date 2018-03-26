@@ -8,10 +8,7 @@ import com.crud.library.domain.dto.ReaderDto;
 import com.crud.library.mapper.LibraryMapper;
 import com.crud.library.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +28,7 @@ public class LibraryController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createReader", consumes = APPLICATION_JSON_VALUE)
     public void createReader(@RequestBody ReaderDto readerDto) {
+        readerDto.setAccountCreated(new Date());
         dbService.saveReader(libraryMapper.mapToReader(readerDto));
     }
 
@@ -42,25 +40,29 @@ public class LibraryController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createItem", consumes = APPLICATION_JSON_VALUE)
     public void createItem(@RequestBody ItemDto itemDto) {
+        itemDto.setStatus(Status.AVAILABLE);
         dbService.saveItem(libraryMapper.mapToItem(itemDto));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createBorrowing", consumes = APPLICATION_JSON_VALUE)
     public void createBorrowing(@RequestBody BorrowingDto borrowingDto) {
+        borrowingDto.setBorrowedFrom(new Date());
+        borrowingDto.setPaidForDamaged(false);
         dbService.saveBorrowing(libraryMapper.mapToBorrowing(borrowingDto));
     }
 
-    public ItemDto updateStatus (ItemDto itemDto, Status status) {
-        itemDto.setStatus(status);
-        return itemDto;
+    @RequestMapping(method = RequestMethod.PUT, value = "updateStatus")
+    public ItemDto updateStatus(@RequestBody ItemDto itemDto) {
+        return libraryMapper.mapToItemDto(dbService.saveItem(libraryMapper.mapToItem(itemDto)));
     }
 
-    public BorrowingDto returnBook (BorrowingDto borrowingDto, boolean paidForDamaged){
-        if(paidForDamaged) {
+    @RequestMapping(method = RequestMethod.PUT, value = "returnBook")
+    public BorrowingDto returnBook(BorrowingDto borrowingDto) {
+/*        if(borrowingDto.isPaidForDamaged()) {
             borrowingDto.getItem().setStatus(Status.AVAILABLE);
         }
-        borrowingDto.setBorrowedTo(new Date());
-        return borrowingDto;
+        borrowingDto.setBorrowedTo(new Date());*/
+        return libraryMapper.mapToBorrowingDto(dbService.saveBorrowing(libraryMapper.mapToBorrowing(borrowingDto)));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBooksWithCondition")

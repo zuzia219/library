@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "READERS")
 public class Reader {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "reader")
     private List<Borrowing> readersBorrowings = new ArrayList<>();
 
     @Id
