@@ -10,10 +10,5 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface BorrowingRepository extends CrudRepository<Borrowing, Long> {
-    @Override
-    Optional<Borrowing> findById (Long id);
-
-    @Override
-    Borrowing save(Borrowing borrowing);
 
 }

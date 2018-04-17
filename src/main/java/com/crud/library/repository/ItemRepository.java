@@ -13,6 +13,4 @@ public interface ItemRepository extends CrudRepository <Item, Long> {
 /*    @Query
     int getNumberOfBookItemsByTitle (@Param("title") String title);*/
 
-    @Override
-    Item save(Item item);
 }

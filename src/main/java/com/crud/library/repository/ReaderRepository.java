@@ -8,6 +8,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 public interface ReaderRepository extends CrudRepository<Reader, Long> {
-    @Override
-    Reader save(Reader reader);
 }
