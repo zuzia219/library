@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public interface ItemRepository extends CrudRepository <Item, Long> {
+public interface ItemRepository extends CrudRepository<Item, Long> {
     @Query(nativeQuery = true)
-    Long getNumberOfBookItemsByTitle(@Param("TITLE")String title);
-    }
+    Long getNumberOfBookItemsByTitle(@Param("TITLE") String title);
+}
 

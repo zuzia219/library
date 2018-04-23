@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,11 +17,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ITEMS")
 
-
 @NamedNativeQuery(
         name = "Item.getNumberOfBookItemsByTitle",
-        query = "SELECT count(*) from books, items where books.id = items.book_id and title = :TITLE",
-        resultClass = Item.class
+        query = "SELECT count(*) from books, items where books.id = items.book_id and title = :TITLE"
 )
 public class Item {
 
@@ -43,6 +40,4 @@ public class Item {
         this.book = book;
         this.status = Status.AVAILABLE;
     }
-
-
 }

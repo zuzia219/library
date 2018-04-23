@@ -101,11 +101,9 @@ public class RepositoryTestSuite {
         //When
         itemRepository.save(item1);
         Long count = itemRepository.getNumberOfBookItemsByTitle("book");
-        System.out.println(count);
         //Then
-        //Assert.assertNotEquals(0, id);
+        Assert.assertNotEquals(Long.valueOf(0), count);
         //CleanUp
         itemRepository.delete(item1);
-
     }
 }

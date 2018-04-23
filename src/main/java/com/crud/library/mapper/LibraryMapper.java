@@ -34,7 +34,7 @@ public class LibraryMapper {
         return new ItemDto(item.getBook().getId(), item.getItemId(), item.getStatus());
     }
 
-     public BorrowingDto mapToBorrowingDto(final Borrowing borrowing) {
-             return new BorrowingDto(borrowing.getReader().getId(), borrowing.getItem().getItemId(), borrowing.getId(), borrowing.isPaidForDamaged());
+    public BorrowingDto mapToBorrowingDto(final Borrowing borrowing) {
+        return new BorrowingDto(borrowing.getReader().getId(), borrowing.getItem().getItemId(), borrowing.getId(), borrowing.isPaidForDamaged());
     }
 }

@@ -78,6 +78,9 @@ public class DbService {
         return libraryMapper.mapToBorrowingDto(borrowing);
     }
 
+    public Long getNumberOfItemsByTitle(String title) {
+        return itemRepository.getNumberOfBookItemsByTitle(title);
+    }
 
     public Book getBookById(final Long id) {
         return bookRepository.findById(id).orElse(null);

@@ -1,7 +1,6 @@
 package com.crud.library.controller;
 
 
-import com.crud.library.domain.Book;
 import com.crud.library.domain.dto.BookDto;
 import com.crud.library.domain.dto.BorrowingDto;
 import com.crud.library.domain.dto.ItemDto;
@@ -11,9 +10,6 @@ import com.crud.library.repository.ItemRepository;
 import com.crud.library.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -59,8 +55,9 @@ public class LibraryController {
     public BorrowingDto returnBook(@RequestBody BorrowingDto borrowingDto) {
         return dbService.returnBook(borrowingDto);
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "getNumberOfItemsByTitle")
     public Long getNumberOfItemsByTitle(@RequestParam String title) {
-        return itemRepository.getNumberOfBookItemsByTitle(title);
+        return dbService.getNumberOfItemsByTitle(title);
     }
 }
