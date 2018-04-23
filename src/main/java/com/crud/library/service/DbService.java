@@ -1,8 +1,11 @@
 package com.crud.library.service;
 
 import com.crud.library.domain.*;
+import com.crud.library.domain.dto.BookDto;
 import com.crud.library.domain.dto.BorrowingDto;
 import com.crud.library.domain.dto.ItemDto;
+import com.crud.library.domain.dto.ReaderDto;
+import com.crud.library.mapper.LibraryMapper;
 import com.crud.library.repository.BookRepository;
 import com.crud.library.repository.BorrowingRepository;
 import com.crud.library.repository.ItemRepository;
@@ -22,48 +25,59 @@ public class DbService {
     private ReaderRepository readerRepository;
     @Autowired
     private BorrowingRepository borrowingRepository;
+    @Autowired
+    private LibraryMapper libraryMapper;
 
-    public Book saveBook(final Book book) {
-        return bookRepository.save(book);
+    public BookDto saveBook(final BookDto bookDto) {
+        Book book = libraryMapper.mapToBook(bookDto);
+        bookRepository.save(book);
+        return libraryMapper.mapToBookDto(book);
     }
 
-    public Reader saveReader(final Reader reader) {
+    public ReaderDto saveReader(final ReaderDto readerDto) {
+        Reader reader = libraryMapper.mapToReader(readerDto);
         reader.setAccountCreated(new Date());
-        return readerRepository.save(reader);
+        readerRepository.save(reader);
+        return libraryMapper.mapToReaderDto(reader);
     }
 
-    public Item saveItem(final ItemDto itemDto) {
+    public ItemDto saveItem(final ItemDto itemDto) {
         Book book = getBookById(itemDto.getBookId());
         Item item = new Item(book);
-        return itemRepository.save(item);
+        itemRepository.save(item);
+        return libraryMapper.mapToItemDto(item);
     }
 
-    public Item updateSatus(final ItemDto itemDto) {
+    public ItemDto updateSatus(final ItemDto itemDto) {
         Item item = getItemById(itemDto.getItemId());
         Book book = item.getBook();
         Status status = itemDto.getStatus();
         item.setStatus(status);
         item.setBook(book);
-        return itemRepository.save(item);
+        itemRepository.save(item);
+        return libraryMapper.mapToItemDto(item);
     }
 
-    public Borrowing saveBorrowing(final BorrowingDto borrowingDto) {
+    public BorrowingDto saveBorrowing(final BorrowingDto borrowingDto) {
         Reader reader = getReaderById(borrowingDto.getReaderId());
         Item item = getItemById(borrowingDto.getItemId());
         Borrowing borrowing = new Borrowing(item, reader);
         borrowing.setBorrowedFrom(new Date());
-        return borrowingRepository.save(borrowing);
+        borrowingRepository.save(borrowing);
+        return libraryMapper.mapToBorrowingDto(borrowing);
     }
 
-    public Borrowing returnBook(final BorrowingDto borrowingDto) {
-        Borrowing borrowing = getBorowingById(borrowingDto.getBorrowingId());
+    public BorrowingDto returnBook(final BorrowingDto borrowingDto) {
+        Borrowing borrowing = getBorrowingById(borrowingDto.getBorrowingId());
         borrowing.setBorrowedTo(new Date());
         if (borrowingDto.isPaidForDamaged()) {
             borrowing.getItem().setStatus(Status.AVAILABLE);
             borrowing.setPaidForDamaged(true);
         }
-        return borrowingRepository.save(borrowing);
+        borrowingRepository.save(borrowing);
+        return libraryMapper.mapToBorrowingDto(borrowing);
     }
+
 
     public Book getBookById(final Long id) {
         return bookRepository.findById(id).orElse(null);
@@ -77,7 +91,7 @@ public class DbService {
         return itemRepository.findById(id).orElse(null);
     }
 
-    public Borrowing getBorowingById(final Long id) {
+    public Borrowing getBorrowingById(final Long id) {
         return borrowingRepository.findById(id).orElse(null);
     }
 }

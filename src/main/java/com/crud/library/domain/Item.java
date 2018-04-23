@@ -5,15 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-/*@NamedQuery(
-        name = "Item.getNumberOfBookItemsByTitle",
-        query = "from Item where book.getTitle= :title, count(all)"
-)*/
 
 @Component
 @NoArgsConstructor
@@ -22,6 +17,13 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "ITEMS")
+
+
+@NamedNativeQuery(
+        name = "Item.getNumberOfBookItemsByTitle",
+        query = "SELECT count(*) from books, items where books.id = items.book_id and title = :TITLE",
+        resultClass = Item.class
+)
 public class Item {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

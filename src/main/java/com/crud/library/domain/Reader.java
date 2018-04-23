@@ -41,6 +41,5 @@ public class Reader {
     public Reader(String name, String familyname) {
         this.name = name;
         this.familyname = familyname;
-        this.accountCreated = new Date();
     }
 }

@@ -40,8 +40,8 @@ public class Book {
     @Column(name = "PUBLICATION_YEAR")
     private int publicationYear;
 
-    public Book(@NotNull String tiltle, @NotNull String author, @NotNull int publicationYear) {
-        this.title = tiltle;
+    public Book(@NotNull String title, @NotNull String author, @NotNull int publicationYear) {
+        this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
     }

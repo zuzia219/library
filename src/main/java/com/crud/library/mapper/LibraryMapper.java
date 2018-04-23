@@ -10,23 +10,31 @@ import com.crud.library.domain.dto.ItemDto;
 import com.crud.library.domain.dto.ReaderDto;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class LibraryMapper {
 
     public Book mapToBook(final BookDto bookDto) {
-        List<Item> items = bookDto.getItems().stream()
-                .map(t -> new Item(t.getBook(), t.getItemId(), t.getStatus()))
-                .collect(Collectors.toList());
-        return new Book(items, bookDto.getId(), bookDto.getTitle(), bookDto.getAuthor(), bookDto.getPublicationYear());
+        return new Book(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getPublicationYear());
+    }
+
+    public BookDto mapToBookDto(final Book book) {
+        return new BookDto(book.getTitle(), book.getAuthor(), book.getPublicationYear());
     }
 
     public Reader mapToReader(final ReaderDto readerDto) {
-        List<Borrowing> borrowings = readerDto.getReadersBorrowings().stream()
-                .map(t -> new Borrowing(t.getId(), t.getItem(), t.getReader(), t.getBorrowedFrom(), t.getBorrowedTo(), t.isPaidForDamaged()))
-                .collect(Collectors.toList());
-        return new Reader(borrowings, readerDto.getId(), readerDto.getName(), readerDto.getFamilyname(), readerDto.getAccountCreated());
+        return new Reader(readerDto.getName(), readerDto.getFamilyname());
+    }
+
+    public ReaderDto mapToReaderDto(final Reader reader) {
+        return new ReaderDto(reader.getName(), reader.getFamilyname(), reader.getAccountCreated());
+    }
+
+    public ItemDto mapToItemDto(final Item item) {
+        return new ItemDto(item.getBook().getId(), item.getItemId(), item.getStatus());
+    }
+
+     public BorrowingDto mapToBorrowingDto(final Borrowing borrowing) {
+             return new BorrowingDto(borrowing.getReader().getId(), borrowing.getItem().getItemId(), borrowing.getId(), borrowing.isPaidForDamaged());
     }
 }
